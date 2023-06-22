@@ -1,0 +1,32 @@
+/**
+ * detectFaceFeatures
+ *
+ * Detects face features in an image
+ *
+ * @param {String} imagePath - Path to the image to detect face features in
+ * @returns {Object} - Object containing the detected face features
+ */
+const detectFaceFeatures = (imagePath) => {
+  // Check if imagePath is valid
+  if (!imagePath || typeof imagePath !== 'string') {
+    throw new Error('Image path must be a valid string');
+  }
+
+  // Import necessary libraries
+  const cv = require('opencv4nodejs');
+  const faceClassifier = new cv.CascadeClassifier(cv.HAAR_FRONTALFACE_ALT2);
+
+  // Read the image
+  const image = cv.imread(imagePath);
+
+  // Detect face features
+  const faceFeatures = faceClassifier.detectMultiScale(image).objects;
+
+  // Log the detected face features
+  console.log('Detected face features:', faceFeatures);
+
+  // Return the detected face features
+  return faceFeatures;
+};
+
+module.exports = detectFaceFeatures;
